@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Robo parlament</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      .card {
+        display: inline-block;
+      }    
+      .title {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      fetch('http://beta.apis.is/althingi/')
+        .then(function(response) {
+          return response.json();
+        }).then(function(json) {
+          return json.map(function(x) { return x.name; });
+        }).then(function(titles) {
+          return titles.map(function(title) {
+            return {url: `https://robohash.org/${title}.png`, title: title};
+          });
+        }).then(function(cards) {
+          return cards.map(function(card) {
+            var img = document.createElement('img');
+            img.setAttribute('src', card.url);
+            
+            var title = document.createElement('div');
+            title.innerHTML = card.title;
+            title.classList.add('title');
+            
+            var card = document.createElement('div');
+            card.classList.add('card');
+            card.appendChild(img);
+            card.appendChild(title);
+
+            return card;
+          });
+        }).then(function(tags) {
+          tags.forEach(function(tag) {
+            document.body.appendChild(tag);
+          });
+        }).catch(function(err) {
+          console.error(err.stack);
+        });
+    </script>
+  </body>
+</html>
