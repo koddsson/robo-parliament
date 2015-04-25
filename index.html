@@ -23,7 +23,9 @@
           return json.map(function(x) { return x.name; });
         }).then(function(titles) {
           return titles.map(function(title) {
-            return {url: `https://robohash.org/${title}.png`, title: title};
+            return {
+              url: 'https://robohash.org/' + title + '.png', title: title
+            };
           });
         }).then(function(cards) {
           return cards.map(function(card) {
